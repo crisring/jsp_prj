@@ -4,6 +4,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="multipart/form-data인 경우 웹 파라미터가 전달되지 않는다."%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,36 +47,44 @@
 		<%-- 		업로더 :
 		<%=request.getParameter("uploader")%><br /> EL : ${ param.uploader}<br> --%>
 
+
+
 		요청방식 :
 		<%=request.getMethod()%><br>
 
+
+
 		<%
-		// 업로드된 파일의 저장 디렉토리 얻기
-		File saveDir = new File("C:/dev/workspace/jsp_prj/src/main/webapp/upload");
+		boolean uploadFlag = (boolean) session.getAttribute("uploadFlag");
 
-		// 업로드 파일의 최대 크기
-		int maxSize = 1024 * 1024 * 12; // 10MBYTE까지의 업로드 가능 초과하면 예외발생
-		int uploadSize = 1024 * 1024 * 600; // 10MBYTE까지의 업로드 가능 초과하면 예외발생
+		if (!uploadFlag) {
 
-		try {
-			// FileUpload Component를 생성 - 생성과 동시에 업로드가 진행
-			MultipartRequest mr = new MultipartRequest(request, saveDir.getAbsolutePath(), maxSize, "UTF-8",
-			new DefaultFileRenamePolicy());
+			// 업로드된 파일의 저장 디렉토리 얻기
+			File saveDir = new File("C:/dev/workspace/jsp_prj/src/main/webapp/upload");
 
-			// 웹 파라메터 받기 (request가 아닌 MultipartRequest 파일 컴퓨넌트를 사용하여 마라메터를 받는다.)
-			String uploader = mr.getParameter("uploader");
-			String[] extArr = mr.getParameterValues("ext");
+			// 업로드 파일의 최대 크기
+			int maxSize = 1024 * 1024 * 12; // 10MBYTE까지의 업로드 가능 초과하면 예외발생
+			int uploadSize = 1024 * 1024 * 600; // 10MBYTE까지의 업로드 가능 초과하면 예외발생
 
-			// 파일명 처리
-			// 원본 파일명
-			String originName = mr.getOriginalFileName("upfile");
-			// 변경된 파일명
-			String fileSysname = mr.getFilesystemName("upfile");
+			try {
+				// FileUpload Component를 생성 - 생성과 동시에 업로드가 진행
+				MultipartRequest mr = new MultipartRequest(request, saveDir.getAbsolutePath(), maxSize, "UTF-8",
+				new DefaultFileRenamePolicy());
 
-			// 업로드된 파일이 최대 크기를 초과하는지 체크
-			File uploadFile = new File(saveDir.getAbsolutePath() + "/" + fileSysname);
-			if (uploadFile.length() > maxSize) {
-				uploadFile.delete(); // 업로드된 파일 삭제
+				// 웹 파라메터 받기 (request가 아닌 MultipartRequest 파일 컴퓨넌트를 사용하여 마라메터를 받는다.)
+				String uploader = mr.getParameter("uploader");
+				String[] extArr = mr.getParameterValues("ext");
+
+				// 파일명 처리
+				// 원본 파일명
+				String originName = mr.getOriginalFileName("upfile");
+				// 변경된 파일명
+				String fileSysname = mr.getFilesystemName("upfile");
+
+				// 업로드된 파일이 최대 크기를 초과하는지 체크
+				File uploadFile = new File(saveDir.getAbsolutePath() + "/" + fileSysname);
+				if (uploadFile.length() > maxSize) {
+			uploadFile.delete(); // 업로드된 파일 삭제
 		%>
 		<%=originName%>은 10MByte(<%=maxSize%>byte)를 초과합니다. <br> 업로드 파일의
 		크기내의 파일로 변환하여 업로드 해주세요. <br> <a href="javascript:history.back()">뒤로</a>
@@ -107,7 +121,10 @@
 		%>
 		파일 업로드 실패!
 		<%
-		}
+		} // end catch
+
+		session.setAttribute("uploadFlag", true);
+		} // end if
 		%>
 	</div>
 </body>

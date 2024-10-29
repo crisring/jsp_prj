@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info=""%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%
+// 이동한 페이지에서 새로 고침 했을 때 작업이 여러번 발생하지 않도록 하기위한 flag값 저장
+session.setAttribute("uploadFlag", false);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +63,6 @@
 			alert("업로드 가능 확장자가 아닙니다.");
 			return;
 		}
-
 		$("#frm").submit();
 	}
 </script>
@@ -76,8 +81,8 @@
 				name="ext" value="png" />png <input type="checkbox" name="ext"
 				value="exe" />exe <input type="checkbox" name="ext" value="hwp" />hwp
 
-			<label>파일</label> <input type="file" name="upfile" id="upfile" /><br>
-			<input type="button" value="업로드" id="btn"
+			<BR> <label>파일</label> <input type="file" name="upfile"
+				id="upfile" /><br> <input type="button" value="업로드" id="btn"
 				class="btn btn-primary btn-sm" />
 
 		</form>

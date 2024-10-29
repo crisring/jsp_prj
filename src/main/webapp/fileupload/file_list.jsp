@@ -55,31 +55,53 @@
 				File loadDir = new File("C:/dev/workspace/jsp_prj/src/main/webapp/upload");
 				File[] listFile = loadDir.listFiles();
 				pageContext.setAttribute("listFile", listFile);
+
+				int index = 0;
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd EEEE HH:mm:ss");
+				String[] accessExtensions = { "jpg", "gif", "png", "bmp", "txt", "js", "css", "html" };
+				String fileName = "";
+				String extension = "";
 				%>
 				<c:choose>
-					<c:when test="${empty listFile }">
+					<c:when test="${empty listFile}">
 						<tr>
 							<td colspan="5">업로드된 파일이 없습니다.</td>
 						</tr>
 					</c:when>
 					<c:otherwise>
 						<%
-						int index = 0;
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd EEEE HH:mm:ss");
 						for (File tempFile : listFile) {
+							fileName = tempFile.getName();
+							extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+							boolean isLink = false;
+
+							for (String ext : accessExtensions) {
+								if (ext.equals(extension)) {
+							isLink = true;
+							break;
+								}
+							}
 						%>
 						<tr>
 							<td><%=++index%></td>
-							<td><img src="../upload/<%=tempFile.getName()%>"
+							<td><img src="../upload/<%=fileName%>"
 								style="width: 100px; height: 50px;"></td>
-							<td><%=tempFile.getName()%></td>
-							<td><%=tempFile.length()%></td>
+							<td>
+								<%
+								if (isLink) {
+								%> <a href="download.jsp?fileName=<%=fileName%>"><%=fileName%></a>
+								<%
+								} else {
+								%> <%=fileName%> <%
+ }
+ %>
+							</td>
+							<td><%=tempFile.length()%> bytes</td>
 							<td><%=sdf.format(new Date(tempFile.lastModified()))%></td>
 						</tr>
 						<%
 						}
 						%>
-
 					</c:otherwise>
 				</c:choose>
 			</tbody>
