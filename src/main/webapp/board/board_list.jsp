@@ -14,9 +14,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="shortcut icon"
-	href="http://192.168.10.219/jsp_prj/common/images/favicon.ico" />
+	href="http://192.168.10.225/jsp_prj/common/images/favicon.ico" />
 <link rel="stylesheet" type="text/css"
-	href="http://192.168.10.219/jsp_prj/common/css/main_20240911.css">
+	href="http://192.168.10.210/jsp_prj/common/css/main_20240911.css">
 <!-- bootstrap CDN 시작-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -69,7 +69,7 @@ function chkNull(){
 	var keyword=$("#keyword").val();
 	
 	if(keyword.length < 2 ){
-		alert("검색 키워는 한글자 이상이 입력하셔야합니다.");
+		alert("검색 키워드는 한글자 이상이 입력하셔야합니다.");
 		return;
 	}//end if
 	
@@ -234,10 +234,7 @@ function loginMove(){
 				<%
 				sVO.setUrl("board_list.jsp");
 				%>
-
-				
-					<%=new BoardUtil().pagination(sVO)%>
-
+				<%=new BoardUtil().pagination(sVO)%>
 			</div>
 		</div>
 	</div>

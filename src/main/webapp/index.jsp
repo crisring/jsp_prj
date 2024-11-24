@@ -45,7 +45,7 @@
 				<a href="http://localhost/jsp_prj/login/login_out.jsp">로그아웃</a>
 				<a href="http://localhost/jsp_prj/mypage/mypage.jsp" title="마이페이지"><c:out
 						value="${ userData.id }(${userData.name })님 로그인 중" /></a>
-
+			<a href="http://localhost/jsp_prj/bookmark_rest/rest_map.jsp">식당리스트</a>
 			</c:otherwise>
 		</c:choose>
 

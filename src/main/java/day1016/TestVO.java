@@ -6,8 +6,13 @@ public class TestVO {
 	private int myAge;
 
 	public TestVO() {
+
+	}
+
+	public TestVO(String name, int myAge) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.myAge = myAge;
 	}
 
 	public String getName() {

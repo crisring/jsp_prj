@@ -39,8 +39,8 @@ os.flush();
 // 6. 출력 스트림 초기화 : out내장객체는 HTML을 출력할 목적의 스트림 -> 파일을 출력할 초기화
 out.clear();
 
-// 7. 응답 헤더 초기화 (다운로드 파)
-out = pageContext().pushBody();
+// 7. 응답 헤더 초기화 (다운로드 파일)	
+out = pageContext.pushBody();
 
 if (fis != null) {
 	fis.close();
